@@ -9,6 +9,9 @@ def index(request):
     template = loader.get_template("LITRevu/index.html")
     return HttpResponse(template.render(context, request))
 
+def login_page(request):
+    return render(request, 'login.html')
+
 
 def login_view(request):
     if request.method == 'POST':
