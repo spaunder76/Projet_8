@@ -8,7 +8,17 @@
     <link rel="stylesheet" href="{% static 'LITRevu/css/main.css' %}">
 </head>
 <body>
-    <h1>Bienvenue sur LITRevu</h1>
-    <p>Rendez vous sur <a href="{% url 'indexofLITRevu' %}">La page de connexion</a> de LITRevu afin de vous connecter </p>
+    <div class="bandeau">
+        <h1>LITRevu</h1>
+    </div>
+    <h2>Bienvenue sur LITRevu</h2>
+    <p>Rendez vous sur <a href="{% url 'registration_page' %}"> La page d'inscription</a> de LITRevu afin de vous inscrire</p>
+    <p>Si vous êtes déjâ inscrit,rendez vous sur <a href="{% url 'login_page' %}">La page de connexion</a> de LITRevu afin de vous connecter </p>
+    {% if user.is_authenticated %}
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Déconnexion</button>
+    </form>
+    {% endif %}
 </body>
 </html>

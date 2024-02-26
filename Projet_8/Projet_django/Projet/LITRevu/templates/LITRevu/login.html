@@ -8,16 +8,26 @@
     <link rel="stylesheet" href="{% static 'LITRevu/css/main.css' %}">
 </head>
 <body>
+    <div class="bandeau">
+        <h1>LITRevu</h1>
+        <a href="{% url 'indexofLITRevu' %}" id="bouton-menu">Accueil</a>    </div>
     <div class="container">
-        <h1>Connexion</h1>
-        <form action="http://127.0.0.1:8000/LITRevu/login" method="post">
+        <h2>Connexion</h2>
+        <form action="{% url 'login_page' %}" method="post"{% csrf_token %}>
             {% csrf_token %}
-            <label for="username">Nom d'utilisateur:</label><br>
+            <label for="username"> Nom d'utilisateur:</label><br>
             <input type="text" id="username" name="username"><br>
             <label for="password">Mot de passe:</label><br>
             <input type="password" id="password" name="password"><br><br>
             <input type="submit" value="Connexion">
         </form>
+        {% if user.is_authenticated %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Déconnexion</button>
+        </form>
+        {% endif %}
     </div>
 </body>
 </html>
+
