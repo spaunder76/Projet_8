@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil utilisateur</title>
+</head>
+<body>
+    <h1>Profil de l'utilisateur</h1>
+    <p>Nom d'utilisateur : {{ user.username }}</p>
+    
+    <h2>Critiques de {{ user.username }}</h2>
+    <ul>
+        {% for critique in critiques %}
+            <li>{{ critique.titre }} - {{ critique.date_creation|date:"d/m/Y H:i" }}</li>
+            <p>{{ critique.contenu }}</p>
+        {% empty %}
+            <p>Cet utilisateur n'a publié aucune critique.</p>
+        {% endfor %}
+    </ul>
+
+    {% if user != request.user %}
+        {% if not user in request.user.profile.following.all %}
+            <form action="{% url 'follow_user' user.username %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Suivre</button>
+            </form>
+        {% else %}
+            <form action="{% url 'unfollow_user' user.username %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Ne plus suivre</button>
+            </form>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
+

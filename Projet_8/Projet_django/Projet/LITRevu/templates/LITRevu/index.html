@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Accueil - LITRevu</title> 
+    <link rel ="stylesheet" href="{% static 'global.css' %}">
+    <link rel="stylesheet" href="{% static 'LITRevu/css/main.css' %}">
+</head>
+<body>
+    <div class="bandeau">
+        <h1>LITRevu</h1>
+        {% if user.is_authenticated %}
+            <!-- Si l'utilisateur est connecté, afficher son nom d'utilisateur -->
+            <p class="utilisateur-connecte">Connecté en tant que : {{ user.username }}</p>
+        {% endif %}
+    </div>
+    <h2>Bienvenue sur LITRevu</h2>
+    <p>Rendez-vous sur <a href="{% url 'registration_page' %}">La page d'inscription</a> de LITRevu afin de vous inscrire</p>
+    <p>Si vous êtes déjà inscrit, rendez-vous sur <a href="{% url 'login_page' %}">La page de connexion</a> de LITRevu afin de vous connecter</p>
+    {% if user.is_authenticated %}
+        <!-- Si l'utilisateur est connecté, afficher les liens vers la liste des critiques et la page de publication des critiques -->
+        <p>Rendez-vous sur <a href="{% url 'liste_critiques' %}">la liste des critiques</a> pour lire les critiques existantes.</p>
+        <p>Si vous souhaitez <a href="{% url 'publier_critique' %}">publier une nouvelle critique</a>, cliquez ici.</p>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Déconnexion</button>
+        </form>
+    {% endif %}
+    {% if ticket_form %}
+    <form method="post">
+        {% csrf_token %}
+        {{ ticket_form.as_p }}
+        <button type="submit">Créer un ticket</button>
+    </form>
+    {% endif %}
+    
+</body>
+</html>

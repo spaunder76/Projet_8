@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des utilisateurs suivis</title>
+</head>
+<body>
+    <h1>Liste des utilisateurs suivis</h1>
+    <ul>
+        {% for user in following %}
+            <li>{{ user.username }}</li>
+        {% empty %}
+            <li>Aucun utilisateur suivi pour le moment.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
